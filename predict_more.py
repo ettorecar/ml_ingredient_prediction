@@ -13,7 +13,7 @@ num_el_incomplete = len(poke_incomplete)
 
 poke_dataset = np.empty((100, 10), dtype='<U25')
 for i in range(100):
-    poke_dataset[i] = random.sample(set(ingredient_list), 10) #set evita le ripetizioni, invece di array/list
+    poke_dataset[i] = random.sample(list(ingredient_list), 10) #usato list invece di set, perchè deprecato
 
 le = LabelEncoder()
 le.fit(ingredient_list)  #trasforma gli elementi da testo a numero
