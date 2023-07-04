@@ -1,6 +1,5 @@
 import sys
 from flask_cors import CORS
-import openai
 import os
 from flask import Flask, request, Response
 
