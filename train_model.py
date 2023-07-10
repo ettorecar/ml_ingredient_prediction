@@ -6,18 +6,16 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import LabelEncoder
 from joblib import dump
 from sklearn.metrics import classification_report
-
-
-#ingredient_list_short = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'salsa di soia', 'wasabi', 'zenzero', 'maionese', 'sesamo', 'alga nori', 'caviale', 'cipolla', 'limone', 'lime']
-ingredient_list = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'salsa di soia', 'wasabi', 'zenzero', 'maionese', 'sesamo', 'alga nori', 'caviale', 'cipolla', 'limone', 'lime', 'mandarino', 'arancia', 'pompelmo', 'mela', 'banana', 'fragola', 'mirtilli', 'kiwi', 'anacardi', 'noccioline', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma', 'coriandolo', 'prezzemolo']
+from ingredients_lists import ingredient_list
 
 num_el_incomplete = 9 #lunghezza dell'array esclusi gli ingredienti mancanti
 num_el_complete = 10 #lunghezza dell'array compresi gli ingredienti mancanti
+num_el_dataset_training = 300 #lunghezza del dataset (numero righe) utilizzato per il training
 
 def creaDataset():
     print('crea dataset')
-    poke_dataset = np.empty((300, num_el_complete), dtype='<U25') #dtype indica che ogni elemento dell'array è una stringa con lunghezza massima di 25 caratteri
-    for i in range(300):
+    poke_dataset = np.empty((num_el_dataset_training, num_el_complete), dtype='<U25') #dtype indica che ogni elemento dell'array è una stringa con lunghezza massima di 25 caratteri
+    for i in range(num_el_dataset_training):
         poke_dataset[i] = random.sample(list(ingredient_list), num_el_complete) #usato list invece di set, perchè deprecato
     return poke_dataset
 
@@ -28,7 +26,7 @@ def codificaDataset():
     le = LabelEncoder()
     le.fit(ingredient_list)  #trasforma gli elementi da testo a numero
 
-    poke_dataset_encoded = np.empty((300, num_el_complete), dtype=int) #dtype indica che ogni elemento dell'array è un numero intero
+    poke_dataset_encoded = np.empty((num_el_dataset_training, num_el_complete), dtype=int) #dtype indica che ogni elemento dell'array è un numero intero
     for i in range(300):
         poke_dataset_encoded[i] = le.transform(poke_dataset[i]) #converte ogni singolo elemento in un numero, come previsto dal .fit precedente
 

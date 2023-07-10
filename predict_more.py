@@ -3,11 +3,8 @@ from sklearn.preprocessing import LabelEncoder
 from joblib import load
 from sklearn.metrics import accuracy_score
 
-#ingredient_list_short = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'salsa di soia', 'wasabi', 'zenzero', 'maionese', 'sesamo', 'alga nori', 'caviale', 'cipolla', 'limone', 'lime']
-ingredient_list = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'salsa di soia', 'wasabi', 'zenzero', 'maionese', 'sesamo', 'alga nori', 'caviale', 'cipolla', 'limone', 'lime', 'mandarino', 'arancia', 'pompelmo', 'mela', 'banana', 'fragola', 'mirtilli', 'kiwi', 'anacardi', 'noccioline', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma', 'coriandolo', 'prezzemolo']
+from ingredients_lists import poke_incomplete, poke_incomplete_alt, ingredient_list_short, ingredient_list
 
-# poke_incomplete = ['tonno', 'salsa di soia', 'polpo', 'mango', 'cetriolo', 'ananas', 'alga nori', 'carote', 'rucola']
-poke_incomplete = ['salmone', 'gamberi', 'avocado', 'fragola', 'peperone', 'lattuga', 'wasabi', 'zenzero', 'maionese']
 num_el_incomplete = len(poke_incomplete) #legge la lunghezza dell'array
 
 def loadModel():
@@ -15,8 +12,12 @@ def loadModel():
     multi_target_forest = load('py_cache/poke_model.joblib') #carica il modello dal file joblib salvato
     return multi_target_forest
 
-def predictIngredient(le):
+def predictIngredient():
     print('predict ingredient')
+
+    le = LabelEncoder()
+    le.fit(ingredient_list)
+
     multi_target_forest = loadModel()
     poke_incomplete_encoded = multi_target_forest.estimators_[0].classes_  #Riprende le classi così come codificate nel modello
 
@@ -47,13 +48,14 @@ def predictIngredient(le):
     return multi_target_forest, poke_incomplete_encoded, predicted_missing_ingredients_encoded
 
 
+predictIngredient()
 
+'''
 def calculate_accuracy():
     print('calculate accuracy')
-    le = LabelEncoder()
-    le.fit(ingredient_list)
 
-    multi_target_forest, _, _ = predictIngredient(le)
+
+
 
     X_train = np.load("py_cache/X_train.npy") #recupera i risultati salvati in train_model
     X_test = np.load("py_cache/X_test.npy")
@@ -71,3 +73,5 @@ def calculate_accuracy():
     print("Average accuracy:", average_accuracy)
 
 calculate_accuracy()
+
+'''
