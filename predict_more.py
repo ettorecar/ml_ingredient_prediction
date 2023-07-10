@@ -2,10 +2,8 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from joblib import load
 from sklearn.metrics import accuracy_score
-
 from ingredients_lists import poke_incomplete, poke_incomplete_alt, ingredient_list_short, ingredient_list
 
-num_el_incomplete = len(poke_incomplete) #legge la lunghezza dell'array
 
 def loadModel():
     print('load model')
@@ -20,7 +18,7 @@ def predictIngredient():
 
     multi_target_forest = loadModel()
     poke_incomplete_encoded = multi_target_forest.estimators_[0].classes_  #Riprende le classi così come codificate nel modello
-
+    num_el_incomplete = len(poke_incomplete) #legge la lunghezza dell'array
     poke_incomplete_encoded = le.transform(poke_incomplete[:num_el_incomplete]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
     predicted_missing_ingredients_encoded = multi_target_forest.predict(poke_incomplete_encoded) #dopo il fit, immancabile il predict per fare la predizione
     predicted_probabilities = multi_target_forest.predict_proba(poke_incomplete_encoded) #indica la probabilità della predizione
