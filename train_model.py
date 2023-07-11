@@ -60,6 +60,16 @@ def trainTest():
 
     dump(multi_target_forest, 'py_cache/poke_model.joblib') #salva il modello addestrato
 
+
     return multi_target_forest
 
 trainTest()
+
+#1 nel file ingredients_lists spostare anche le costanti numeriche. p.s. casomai rinominare il file in constants.py, cambiare anche l'import importando tutto (*).
+#2 spostare la funzione predict nel fil train e cancellare i file cache se non servono più
+#3 verificare se si può cambiare nel metodo che stampa le "statistiche" i numeri decimali (invece di 2 qualcuno in più) in modo da capire che la funzione che calcula l'accuracy a mano sia superflua
+#4 esporre il metodo predict ingredient in get (inizialmente poi lo metteremo in post), in modo da lanciare il file app (rimane attivo), e provare a chiamare le funzioni inserendo l'indirizzo da una pagina web
+#4bis cambiare il return di predict facendo restituire solo quello che dobbiamo stampare in pagina
+#5 quando faremo il metodo post (copiare dall'altro progetto AI generativa) creiamo una pagina web in cui viene effettuata una chiamata post e gli passiamo gli ingredienti in input al metodo esposto e passato in input al metodo predict
+#6 [inizia a vedere ettore] se possibile creare un modello sempre random ma con qualche associazione intrinseca all'interno
+

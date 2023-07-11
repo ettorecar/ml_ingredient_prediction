@@ -26,7 +26,8 @@ def root():
 @app.route("/api/v.1.0/backend_poke_predict", methods=["GET"])
 def request_get():
     print("RECEIVED get request")
-    return ("get request not allowed")
+    #return ("get request not allowed")
+    # da sostituire con il return del metodo predict
 
 
 @app.route("/api/v.1.0/backend_poke_predict", methods=["POST"])
