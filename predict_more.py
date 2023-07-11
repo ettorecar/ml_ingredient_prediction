@@ -44,6 +44,7 @@ def predictIngredient():
     print(poke_incomplete)
     
     return multi_target_forest, poke_incomplete_encoded, predicted_missing_ingredients_encoded
+    #forse nel return non dovremo restituire tutto ma solo l'array con gli ingredienti completo
 
 
 predictIngredient()
