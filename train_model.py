@@ -6,11 +6,8 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import LabelEncoder
 from joblib import dump
 from sklearn.metrics import classification_report
-from ingredients_lists import ingredient_list
+from constants import *
 
-num_el_incomplete = 9 #lunghezza dell'array esclusi gli ingredienti mancanti
-num_el_complete = 10 #lunghezza dell'array compresi gli ingredienti mancanti
-num_el_dataset_training = 300 #lunghezza del dataset (numero righe) utilizzato per il training
 
 def creaDataset():
     print('crea dataset')
@@ -34,7 +31,13 @@ def codificaDataset():
     y = poke_dataset_encoded[:, num_el_incomplete:] #y è l'output, comprende le colonne mancanti, cioè le label
     return X, y, le
 
-
+# def is_float(val): ***SERVE PER STAMPARE QUATTRO CIFRE DECIMALI NEL REPORT***
+#         try:
+#             float(val)
+#             return True
+#         except ValueError:
+#             return False
+        
 def trainTest():
     print('train test')
     X, y, le = codificaDataset()
@@ -57,6 +60,9 @@ def trainTest():
     # stampiamo il report
     print('report: ')
     print(report)
+    # for line in report.split('\n'): ***SERVE PER STAMPARE QUATTRO CIFRE DECIMALI NEL REPORT***
+    #     newline = ' '.join(["{:.4f}".format(float(val)) if is_float(val) else val for val in line.split()])
+    #     print(newline)
 
     dump(multi_target_forest, 'py_cache/poke_model.joblib') #salva il modello addestrato
 
@@ -65,11 +71,11 @@ def trainTest():
 
 trainTest()
 
-#1 nel file ingredients_lists spostare anche le costanti numeriche. p.s. casomai rinominare il file in constants.py, cambiare anche l'import importando tutto (*).
-#2 spostare la funzione predict nel fil train e cancellare i file cache se non servono più
-#3 verificare se si può cambiare nel metodo che stampa le "statistiche" i numeri decimali (invece di 2 qualcuno in più) in modo da capire che la funzione che calcula l'accuracy a mano sia superflua
-#4 esporre il metodo predict ingredient in get (inizialmente poi lo metteremo in post), in modo da lanciare il file app (rimane attivo), e provare a chiamare le funzioni inserendo l'indirizzo da una pagina web
-#4bis cambiare il return di predict facendo restituire solo quello che dobbiamo stampare in pagina
+#1 nel file ingredients_lists spostare anche le costanti numeriche. p.s. casomai rinominare il file in constants.py, cambiare anche l'import importando tutto (*). ***FATTO***
+#2 spostare la funzione accuracy nel file train e cancellare i file cache se non servono più ***LASCIATA COMMENTATA***
+#3 verificare se si può cambiare nel metodo che stampa le "statistiche" i numeri decimali (invece di 2 qualcuno in più) in modo da capire che la funzione che calcula l'accuracy a mano sia superflua ***LASCIATI I COMANDI COMMENTATI, STAMPANO DUE ZERI EXTRA PER ARRIVARE A QUATTRO CIFRE DECIMALI***
+#4 esporre il metodo predict ingredient in get (inizialmente poi lo metteremo in post), in modo da lanciare il file app (rimane attivo), e provare a chiamare le funzioni inserendo l'indirizzo da una pagina web ***FATTO***
+#4bis cambiare il return di predict facendo restituire solo quello che dobbiamo stampare in pagina ***FATTO***
 #5 quando faremo il metodo post (copiare dall'altro progetto AI generativa) creiamo una pagina web in cui viene effettuata una chiamata post e gli passiamo gli ingredienti in input al metodo esposto e passato in input al metodo predict
 #6 [inizia a vedere ettore] se possibile creare un modello sempre random ma con qualche associazione intrinseca all'interno
 
