@@ -22,7 +22,7 @@ def predictIngredient():
     predicted_missing_ingredients_encoded = multi_target_forest.predict(poke_incomplete_encoded) #dopo il fit, immancabile il predict per fare la predizione
     predicted_probabilities = multi_target_forest.predict_proba(poke_incomplete_encoded) #indica la probabilità della predizione
 
-    missing_ingredients_count = 10 - num_el_incomplete
+    missing_ingredients_count = num_el_complete - num_el_incomplete
     predicted_ingredients = []
 
     for _ in range(missing_ingredients_count):
@@ -44,5 +44,5 @@ def predictIngredient():
     
     return(poke_incomplete)
 
-
-# predictIngredient() ***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
+#***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
+predictIngredient() 
