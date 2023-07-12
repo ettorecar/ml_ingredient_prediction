@@ -20,4 +20,4 @@ poke_incomplete_alt = ['salmone', 'gamberi', 'avocado', 'fragola', 'peperone', '
 
 num_el_incomplete = 9 #lunghezza dell'array esclusi gli ingredienti mancanti
 num_el_complete = 10 #lunghezza dell'array compresi gli ingredienti mancanti
-num_el_dataset_training = 500 #lunghezza del dataset (numero righe) utilizzato per il training
+num_el_dataset_training = 5000 #lunghezza del dataset (numero righe) utilizzato per il training

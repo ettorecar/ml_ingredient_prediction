@@ -35,6 +35,7 @@ def request_post():
 
     print("ciao")
     print(myArray)
+    myArray = myArray.split(", ")
     myResult = predict_more.predictIngredient(myArray)
     print('casa')
     print(myResult)

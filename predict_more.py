@@ -12,7 +12,7 @@ def loadModel():
 def predictIngredient(myArray):
     print('predict ingredient')
 
-    poke_incomplete = myArray.split(", ")
+    # poke_incomplete = myArray.split(", ")
     le = LabelEncoder()
     le.fit(ingredient_list)
 
@@ -46,4 +46,4 @@ def predictIngredient(myArray):
     return(poke_incomplete)
 
 #***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
-#predictIngredient() 
+# predictIngredient(poke_incomplete) 

@@ -52,7 +52,7 @@ def codificaDataset():
         # converte ogni singolo elemento in un numero, come previsto dal .fit precedente
         poke_dataset_encoded[i] = le.transform(poke_dataset[i])
 
-    scatterDataset(poke_dataset_encoded)
+    # scatterDataset(poke_dataset_encoded)
 
     # X è l'input, quindi la matrice delle feature
     X = poke_dataset_encoded[:, :num_el_incomplete]
