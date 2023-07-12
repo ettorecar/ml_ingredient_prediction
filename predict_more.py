@@ -9,9 +9,10 @@ def loadModel():
     multi_target_forest = load('py_cache/poke_model.joblib') #carica il modello dal file joblib salvato
     return multi_target_forest
 
-def predictIngredient():
+def predictIngredient(myArray):
     print('predict ingredient')
 
+    poke_incomplete = myArray.split(", ")
     le = LabelEncoder()
     le.fit(ingredient_list)
 
