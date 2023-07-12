@@ -1,3 +1,6 @@
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 import random
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -10,14 +13,29 @@ from constants import *
 from sklearn.metrics import accuracy_score
 
 
+def scatterDataset(encoded_ingredients):
+ # Riduci la dimensionalità a 2 usando PCA
+    pca = PCA(n_components=2)
+    reduced_points = pca.fit_transform(encoded_ingredients)
+
+    # Disegna i punti
+    plt.scatter(reduced_points[:, 0], reduced_points[:, 1])
+    plt.show()
+
+
 def creaDataset():
     print('crea dataset')
     # dtype indica che ogni elemento dell'array è una stringa con lunghezza massima di 25 caratteri
     poke_dataset = np.empty(
         (num_el_dataset_training, num_el_complete), dtype='<U25')
     for i in range(num_el_dataset_training):
-        # usato list invece di set, perchè deprecato
-        poke_dataset[i] = random.sample(list(ingredient_list), num_el_complete)
+        # la prossima riga commentata creava dataset completamente casuale
+        # poke_dataset[i] = random.sample(list(ingredient_list), num_el_complete)
+        # creiamo un dataset con delle associazioni all'interno e un po' di casualità
+        group_ingredients = random.sample(
+            ingredient_groups[random.randint(0, len(ingredient_groups)-1)], 6)
+        extra_ingredients = random.sample(other_ingredients, 4)
+        poke_dataset[i] = group_ingredients + extra_ingredients
     return poke_dataset
 
 
@@ -30,9 +48,11 @@ def codificaDataset():
     # dtype indica che ogni elemento dell'array è un numero intero
     poke_dataset_encoded = np.empty(
         (num_el_dataset_training, num_el_complete), dtype=int)
-    for i in range(300):
+    for i in range(num_el_dataset_training):
         # converte ogni singolo elemento in un numero, come previsto dal .fit precedente
         poke_dataset_encoded[i] = le.transform(poke_dataset[i])
+
+    scatterDataset(poke_dataset_encoded)
 
     # X è l'input, quindi la matrice delle feature
     X = poke_dataset_encoded[:, :num_el_incomplete]
@@ -67,6 +87,7 @@ def calculate_accuracy(multi_target_forest, X_test, y_test):
 def trainTest():
     print('train test')
     X, y, le = codificaDataset()
+
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=1)
 
@@ -99,6 +120,9 @@ def trainTest():
 
 
 trainTest()
+
+
+
 
 # 1 nel file ingredients_lists spostare anche le costanti numeriche. p.s. casomai rinominare il file in constants.py, cambiare anche l'import importando tutto (*). ***FATTO***
 # 2 spostare la funzione accuracy nel file train e cancellare i file cache se non servono più ***LASCIATA COMMENTATA***
