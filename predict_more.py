@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from joblib import load
-# from sklearn.metrics import accuracy_score ***SERVE PER LA FUNZIONE COMMENTATA DEL CALCOLO DI ACCURACY***
 from constants import *
 
 
@@ -44,36 +43,6 @@ def predictIngredient():
     print(poke_incomplete)
     
     return(poke_incomplete)
-    # return multi_target_forest, poke_incomplete_encoded, predicted_missing_ingredients_encoded
-    #forse nel return non dovremo restituire tutto ma solo l'array con gli ingredienti completo ***ESATTO***
 
 
 # predictIngredient() ***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
-
-
-# def calculate_accuracy(): ***GIà INCLUSO NEL REPORT COMPLETO DEL TRAN MODEL***
-#     print('calculate accuracy')
-
-#     le = LabelEncoder()
-#     le.fit(ingredient_list)
-
-#     multi_target_forest, _, _ = predictIngredient(le)
-
-
-#     X_train = np.load("py_cache/X_train.npy") #recupera i risultati salvati in train_model
-#     X_test = np.load("py_cache/X_test.npy")
-#     y_train = np.load("py_cache/y_train.npy")
-#     y_test = np.load("py_cache/y_test.npy")
-
-#     #calcolo accuratezza media del modello   
-#     y_pred = multi_target_forest.predict(X_test)
-#     accuracies = []
-#     for i in range(y_test.shape[1]):
-#         accuracy = accuracy_score(y_test[:, i], y_pred[:, i])
-#         accuracies.append(accuracy)
-
-#     average_accuracy = sum(accuracies) / len(accuracies)
-#     print("Average accuracy:", average_accuracy)
-
-# calculate_accuracy()
-
