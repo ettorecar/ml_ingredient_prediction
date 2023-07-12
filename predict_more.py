@@ -45,4 +45,4 @@ def predictIngredient():
     return(poke_incomplete)
 
 #***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
-predictIngredient() 
+#predictIngredient() 
