@@ -5,7 +5,8 @@ from flask import Flask, request, Response
 import predict_more
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+# CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 # CORS(app) # <-sblocca gli accessi da tutti gli ip
 
 
@@ -26,7 +27,18 @@ def request_get():
 @app.route("/api/v.1.0/backend_poke_predict", methods=["POST"])
 def request_post():
     print("RECEIVED post request")
-    return ("ok")
+    # return('stringa')
+   
+    request_data = request.get_json()
+    myArray = request_data['poke_incomplete']
+    # return("ok")
+
+    print("ciao")
+    print(myArray)
+    myResult = predict_more.predictIngredient(myArray)
+    print('casa')
+    print(myResult)
+    return(myResult)
 
 
 if __name__ == "__main__":
