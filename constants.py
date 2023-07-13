@@ -20,4 +20,4 @@ poke_incomplete = ['ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattug
 
 num_inc = 9 #lunghezza dell'array esclusi gli ingredienti mancanti
 num_com = 10 #lunghezza dell'array compresi gli ingredienti mancanti
-num_row = 10 #lunghezza del dataset (numero righe) utilizzato per il training
+num_row = 1000 #lunghezza del dataset (numero righe) utilizzato per il training

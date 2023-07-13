@@ -86,3 +86,16 @@ def scatter_ingredients(poke_dataset):
 
     plt.show()
 
+def plotFeatures(multi_target_forest, X_train, y_train):
+    for i in range(y_train.shape[1]):
+        RF_model = multi_target_forest.estimators_[i]
+        importances = RF_model.feature_importances_
+        indices = np.argsort(importances)
+
+        plt.figure(i)
+        plt.title('Importanze delle caratteristiche per l\'output {}'.format(i))
+        plt.barh(range(X_train.shape[1]), importances[indices], color='b', align='center')
+        plt.yticks(range(X_train.shape[1]), [ingredient_list[i] for i in indices])
+        plt.xlabel('Importanza relativa')
+        plt.show()
+

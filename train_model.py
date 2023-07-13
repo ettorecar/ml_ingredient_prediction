@@ -77,8 +77,13 @@ def trainTest():
     multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: utilizza tutti i processori
     multi_target_forest.fit(X_train, y_train)  # addestriamo il modello
 
+    #grafico dell'importanza delle feature
+    trainplot.plotFeatures(multi_target_forest, X_train, y_train)
+
     # facciamo delle predizioni sul test set
     predictions = multi_target_forest.predict(X_test)
+    print ('predictions:')
+    print (predictions)
     # produciamo il report di classificazione
     report = classification_report(y_test, predictions, zero_division=1)
 
