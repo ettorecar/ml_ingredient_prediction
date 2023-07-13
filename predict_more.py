@@ -4,6 +4,7 @@ from joblib import load
 from constants import *
 
 
+
 def loadModel():
     print('load model')
     multi_target_forest = load('py_cache/poke_model.joblib') #carica il modello dal file joblib salvato
@@ -12,18 +13,21 @@ def loadModel():
 def predictIngredient(myArray):
     print('predict ingredient')
 
-    # poke_incomplete = myArray.split(", ")
     le = LabelEncoder()
     le.fit(ingredient_list)
 
+
     multi_target_forest = loadModel()
     poke_incomplete_encoded = multi_target_forest.estimators_[0].classes_  #Riprende le classi così come codificate nel modello
-    num_el_incomplete = len(poke_incomplete) #legge la lunghezza dell'array
-    poke_incomplete_encoded = le.transform(poke_incomplete[:num_el_incomplete]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
+    num_inc = len(poke_incomplete) #legge la lunghezza dell'array
+    poke_incomplete_encoded = le.transform(poke_incomplete[:num_inc]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
     predicted_missing_ingredients_encoded = multi_target_forest.predict(poke_incomplete_encoded) #dopo il fit, immancabile il predict per fare la predizione
+    print (predicted_missing_ingredients_encoded)
+    predicted_ingredient = le.inverse_transform(predicted_missing_ingredients_encoded)
+    print(predicted_ingredient)
     predicted_probabilities = multi_target_forest.predict_proba(poke_incomplete_encoded) #indica la probabilità della predizione
-
-    missing_ingredients_count = num_el_complete - num_el_incomplete
+    print (predicted_probabilities)
+    missing_ingredients_count = num_com - num_inc
     predicted_ingredients = []
 
     for _ in range(missing_ingredients_count):
@@ -33,6 +37,9 @@ def predictIngredient(myArray):
             max_prob_current = np.max(prob_array)
             max_prob_index = np.argmax(prob_array)
             current_ingredient = ingredient_list[max_prob_index]
+            print(current_ingredient)
+            print(max_prob_current)
+            print(max_prob_index)
             if max_prob_current > max_prob and current_ingredient not in poke_incomplete and current_ingredient not in predicted_ingredients:
                 max_prob = max_prob_current
                 max_prob_ingredient = current_ingredient
@@ -40,10 +47,10 @@ def predictIngredient(myArray):
         probability = max_prob * 100
         print("predicted:", max_prob_ingredient, "with probability:", probability, "%")
 
+
     poke_incomplete.extend(predicted_ingredients)
     print(poke_incomplete)
     
     return(poke_incomplete)
-
-#***SE ATTIVO NEL GET DI APP.PY QUI NON SERVE. FAREBBE PARTIRE PRIMA LA FUNZIONE E CERCHEREBBE DI PREDIRE DI NUOVO CON 10 INGREDIENTI GIà NELL'ARRAY***
-# predictIngredient(poke_incomplete) 
+ 
+predictIngredient(poke_incomplete) 

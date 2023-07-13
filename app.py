@@ -1,14 +1,12 @@
 import sys
 from flask_cors import CORS
 import os
-from flask import Flask, request, Response
-import predict_more
+from flask import Flask, request
+from predict_more import predictIngredient
 
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 # CORS(app) # <-sblocca gli accessi da tutti gli ip
-
 
 
 @app.route('/')
@@ -20,7 +18,7 @@ def root():
 @app.route("/api/v.1.0/backend_poke_predict", methods=["GET"])
 def request_get():
     print("RECEIVED get request")
-    return (predict_more.predictIngredient())
+    #return (predict_more.predictIngredient())
     # da sostituire con il return del metodo predict
 
 
@@ -36,7 +34,7 @@ def request_post():
     print("ciao")
     print(myArray)
     myArray = myArray.split(", ")
-    myResult = predict_more.predictIngredient(myArray)
+    myResult = predictIngredient(myArray)
     print('casa')
     print(myResult)
     return(myResult)
