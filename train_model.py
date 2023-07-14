@@ -21,9 +21,11 @@ def creaDataset():
         # la prossima riga commentata creava dataset completamente casuale
         #poke_dataset[i] = random.sample(list(ingredient_list), num_com)
         # creiamo un dataset con delle associazioni all'interno e un po' di casualità
-        group_ingredients = random.sample(ingredient_groups[random.randint(0, len(ingredient_groups)-1)], 6)
-        extra_ingredients = random.sample(other_ingredients, 4)
-        poke_dataset[i] = group_ingredients + extra_ingredients
+        #group_ingredients = random.sample(ingredient_groups[random.randint(0, len(ingredient_groups)-1)], 6)
+        #extra_ingredients = random.sample(other_ingredients, 4)
+        #poke_dataset[i] = group_ingredients + extra_ingredients
+        #poke_dataset[i] = random.sample(list(['ananas', 'cetriolo', 'carote', 'cipolla', 'peperone', 'rucola', 'lattuga', 'limone', 'lime', 'mandarino','caviale']), num_com)
+        poke_dataset[i] = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone'] #prova da fare è metterli in ordine shuffle.
     return poke_dataset
 
 
@@ -40,8 +42,13 @@ def codificaDataset():
         # converte ogni singolo elemento in un numero, come previsto dal .fit precedente
         poke_dataset_encoded[i] = le.transform(poke_dataset[i])
 
+    unique_numbers, counts = np.unique(poke_dataset, return_counts=True)
+
+    for number, count in zip(unique_numbers, counts):
+        print(f"{number}: {count}")
+    #print (poke_dataset_encoded)
     #disegna il grafico
-    trainplot.scatter_ingredients(poke_dataset)
+    #trainplot.scatter_ingredients(poke_dataset)
 
     # X è l'input, quindi la matrice delle feature
     X = poke_dataset_encoded[:, :num_inc]
@@ -78,12 +85,12 @@ def trainTest():
     multi_target_forest.fit(X_train, y_train)  # addestriamo il modello
 
     #grafico dell'importanza delle feature
-    trainplot.plotFeatures(multi_target_forest, X_train, y_train)
+    #trainplot.plotFeatures(multi_target_forest, X_train, y_train)
 
     # facciamo delle predizioni sul test set
     predictions = multi_target_forest.predict(X_test)
-    print ('predictions:')
-    print (predictions)
+    #print ('predictions:')
+    #print (predictions)
     # produciamo il report di classificazione
     report = classification_report(y_test, predictions, zero_division=1)
 

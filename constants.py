@@ -11,10 +11,10 @@ ingredient_groups = [
 ]
 #questi ingredienti li aggiungiamo casualmente per dare più casualità
 other_ingredients = [ 'cipolla', 'arancia', 'pompelmo', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma', 'coriandolo', 'prezzemolo']
-
+poke_incomplete = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'ananas', 'cetriolo', 'carote', 'peperone']
 #poke_incomplete = ['carote', 'anacardi', 'rucola', 'peperone', 'cipolla', 'arancia', 'mela', 'caviale', 'mirin']
-poke_incomplete = ['ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'limone', 'mandarino', 'caviale']
-#poke_incomplete = ['ananas', 'cetriolo', 'banana', 'fragola', 'mirtilli', 'kiwi', 'anacardi', 'noccioline','mela']
+#poke_incomplete = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'cipolla', 'arancia', 'pompelmo','peperoncino']
+#poke_incomplete = ['ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'limone', 'lime', 'mandarino']
 #poke_incomplete = ['salmone', 'gamberi', 'avocado', 'fragola', 'peperone', 'lattuga', 'wasabi', 'zenzero', 'maionese']
 
 
