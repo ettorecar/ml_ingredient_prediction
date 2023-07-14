@@ -11,13 +11,14 @@ ingredient_groups = [
 ]
 #questi ingredienti li aggiungiamo casualmente per dare più casualità
 other_ingredients = [ 'cipolla', 'arancia', 'pompelmo', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma', 'coriandolo', 'prezzemolo']
-poke_incomplete = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'ananas', 'cetriolo', 'carote', 'peperone']
+
+poke_incomplete = ['cipolla', 'arancia', 'pompelmo', 'peperoncino', 'aglio', 'mirin', 'sake', 'mela']
 #poke_incomplete = ['carote', 'anacardi', 'rucola', 'peperone', 'cipolla', 'arancia', 'mela', 'caviale', 'mirin']
 #poke_incomplete = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'cipolla', 'arancia', 'pompelmo','peperoncino']
 #poke_incomplete = ['ananas', 'cetriolo', 'carote', 'peperone', 'rucola', 'lattuga', 'limone', 'lime', 'mandarino']
 #poke_incomplete = ['salmone', 'gamberi', 'avocado', 'fragola', 'peperone', 'lattuga', 'wasabi', 'zenzero', 'maionese']
 
 
-num_inc = 9 #lunghezza dell'array esclusi gli ingredienti mancanti
+num_inc = 8 #lunghezza dell'array esclusi gli ingredienti mancanti
 num_com = 10 #lunghezza dell'array compresi gli ingredienti mancanti
-num_row = 1000 #lunghezza del dataset (numero righe) utilizzato per il training
+num_row = 100 #lunghezza del dataset (numero righe) utilizzato per il training

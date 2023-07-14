@@ -24,8 +24,11 @@ def creaDataset():
         #group_ingredients = random.sample(ingredient_groups[random.randint(0, len(ingredient_groups)-1)], 6)
         #extra_ingredients = random.sample(other_ingredients, 4)
         #poke_dataset[i] = group_ingredients + extra_ingredients
-        #poke_dataset[i] = random.sample(list(['ananas', 'cetriolo', 'carote', 'cipolla', 'peperone', 'rucola', 'lattuga', 'limone', 'lime', 'mandarino','caviale']), num_com)
-        poke_dataset[i] = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone'] #prova da fare è metterli in ordine shuffle.
+        if (i % 2 == 0):
+            poke_dataset[i] = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone']
+        else:
+            poke_dataset[i] = ['cipolla', 'arancia', 'pompelmo', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma']
+    print (poke_dataset)
     return poke_dataset
 
 
@@ -35,6 +38,12 @@ def codificaDataset():
     le = LabelEncoder()
     le.fit(ingredient_list)  # trasforma gli elementi da testo a numero
 
+    encoded_list = le.transform(ingredient_list)
+
+    # stampa ingrediente e id numerico assegnato 
+    for ingredient, number in zip(ingredient_list, encoded_list):
+        print(f"Ingrediente originale: {ingredient} | Numero assegnato: {number}")
+
     # dtype indica che ogni elemento dell'array è un numero intero
     poke_dataset_encoded = np.empty(
         (num_row, num_com), dtype=int)
@@ -42,19 +51,18 @@ def codificaDataset():
         # converte ogni singolo elemento in un numero, come previsto dal .fit precedente
         poke_dataset_encoded[i] = le.transform(poke_dataset[i])
 
-    unique_numbers, counts = np.unique(poke_dataset, return_counts=True)
 
-    for number, count in zip(unique_numbers, counts):
-        print(f"{number}: {count}")
+    #conteggia quante volte appaiono gli ingredienti nel dataset in totale per ingrediente
+    #unique_numbers, counts = np.unique(poke_dataset, return_counts=True)
+    #for number, count in zip(unique_numbers, counts):
+    #    print(f"{number}: {count}")
     #print (poke_dataset_encoded)
-    #disegna il grafico
-    #trainplot.scatter_ingredients(poke_dataset)
 
-    # X è l'input, quindi la matrice delle feature
-    X = poke_dataset_encoded[:, :num_inc]
-    # y è l'output, comprende le colonne mancanti, cioè le label
-    y = poke_dataset_encoded[:, num_inc:]
-    return X, y
+    #disegna il grafico degli ingredienti
+    trainplot.scatter_ingredients(poke_dataset)
+
+
+    return poke_dataset_encoded
 
 
 def calculate_accuracy(multi_target_forest, X_test, y_test):
@@ -73,8 +81,14 @@ def calculate_accuracy(multi_target_forest, X_test, y_test):
 
 
 def trainTest():
+
     
-    X, y = codificaDataset()
+    poke_dataset_encoded = codificaDataset()
+
+    # X è l'input, quindi la matrice delle feature
+    X = poke_dataset_encoded[:, :num_inc]
+    # y è l'output, comprende le colonne mancanti, cioè le label
+    y = poke_dataset_encoded[:, num_inc:]
 
     print('start training model')
     X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=1)
@@ -84,7 +98,7 @@ def trainTest():
     multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: utilizza tutti i processori
     multi_target_forest.fit(X_train, y_train)  # addestriamo il modello
 
-    #grafico dell'importanza delle feature
+    #grafico dell'importanza delle feature, sembra funzionare a caso
     #trainplot.plotFeatures(multi_target_forest, X_train, y_train)
 
     # facciamo delle predizioni sul test set
@@ -92,11 +106,11 @@ def trainTest():
     #print ('predictions:')
     #print (predictions)
     # produciamo il report di classificazione
-    report = classification_report(y_test, predictions, zero_division=1)
+    #report = classification_report(y_test, predictions, zero_division=1)
 
     # stampiamo il report
-    print('report: ')
-    print(report)
+    #print('report: ')
+    #print(report)
 
     # altro metodo per calcolare accuracy
     calculate_accuracy(multi_target_forest, X_test, y_test)

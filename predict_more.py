@@ -23,32 +23,28 @@ def predictIngredient(myArray):
     poke_incomplete_encoded = le.transform(poke_incomplete[:num_inc]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
     predicted_missing_ingredients_encoded = multi_target_forest.predict(poke_incomplete_encoded) #dopo il fit, immancabile il predict per fare la predizione
     print (predicted_missing_ingredients_encoded)
-    predicted_ingredient = le.inverse_transform(predicted_missing_ingredients_encoded)
-    print(predicted_ingredient)
+    for ingredient_encoded in predicted_missing_ingredients_encoded:
+        predicted_ingredient = le.inverse_transform(ingredient_encoded)
+        print(predicted_ingredient)
+    
     predicted_probabilities = multi_target_forest.predict_proba(poke_incomplete_encoded) #indica la probabilità della predizione
-    print (predicted_probabilities)
+    #print (predicted_probabilities)
     missing_ingredients_count = num_com - num_inc
-    predicted_ingredients = []
+    #predicted_ingredients = []
 
     for _ in range(missing_ingredients_count):
         max_prob = 0
-        max_prob_ingredient = ''
         for prob_array in predicted_probabilities:
             max_prob_current = np.max(prob_array)
             max_prob_index = np.argmax(prob_array)
-            current_ingredient = ingredient_list[max_prob_index]
-            print(current_ingredient)
-            print(max_prob_current)
-            print(max_prob_index)
-            if max_prob_current > max_prob and current_ingredient not in poke_incomplete and current_ingredient not in predicted_ingredients:
+            if max_prob_current > max_prob:
                 max_prob = max_prob_current
-                max_prob_ingredient = current_ingredient
-        predicted_ingredients.append(max_prob_ingredient)
+
         probability = max_prob * 100
-        print("predicted:", max_prob_ingredient, "with probability:", probability, "%")
+        print("probability:", probability, "%")
 
 
-    poke_incomplete.extend(predicted_ingredients)
+    poke_incomplete.extend(predicted_ingredient)
     print(poke_incomplete)
     
     return(poke_incomplete)
