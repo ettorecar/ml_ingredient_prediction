@@ -32,16 +32,18 @@ def predictIngredient(myArray):
     missing_ingredients_count = num_com - num_inc
     #predicted_ingredients = []
 
-    for _ in range(missing_ingredients_count):
-        max_prob = 0
-        for prob_array in predicted_probabilities:
-            max_prob_current = np.max(prob_array)
-            max_prob_index = np.argmax(prob_array)
-            if max_prob_current > max_prob:
-                max_prob = max_prob_current
+    # Cicla attraverso i risultati per ogni label
+    counter = 1
 
-        probability = max_prob * 100
-        print("probability:", probability, "%")
+    # Cicla attraverso i risultati per ogni label
+    for label_probs in predicted_probabilities:
+        # Ottieni la probabilità più alta
+        max_probability = label_probs.max()
+        
+        # Stampa la probabilità più alta per la label corrente
+        print("La probabilità più alta per la label", counter, "è:", str(max_probability*100)+"%")
+        counter += 1
+
 
 
     poke_incomplete.extend(predicted_ingredient)

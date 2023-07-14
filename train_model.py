@@ -19,16 +19,13 @@ def creaDataset():
         (num_row, num_com), dtype='<U25')
     for i in range(num_row):
         # la prossima riga commentata creava dataset completamente casuale
-        #poke_dataset[i] = random.sample(list(ingredient_list), num_com)
+        poke_dataset[i] = random.sample(ing_basi, 1) +  random.sample(ing_princ, 2) + random.sample(ing_altri, 4) + random.sample(ing_semi, 1) + random.sample(ing_salsa, 1) + random.sample(ing_topping, 1) 
         # creiamo un dataset con delle associazioni all'interno e un po' di casualità
         #group_ingredients = random.sample(ingredient_groups[random.randint(0, len(ingredient_groups)-1)], 6)
         #extra_ingredients = random.sample(other_ingredients, 4)
         #poke_dataset[i] = group_ingredients + extra_ingredients
-        if (i % 2 == 0):
-            poke_dataset[i] = ['tonno', 'salmone', 'gamberi', 'polpo', 'avocado', 'mango', 'ananas', 'cetriolo', 'carote', 'peperone']
-        else:
-            poke_dataset[i] = ['cipolla', 'arancia', 'pompelmo', 'peperoncino', 'aglio', 'mirin', 'sake', 'sale', 'pepe', 'curcuma']
-    print (poke_dataset)
+  
+    #print (poke_dataset)
     return poke_dataset
 
 
@@ -42,7 +39,7 @@ def codificaDataset():
 
     # stampa ingrediente e id numerico assegnato 
     for ingredient, number in zip(ingredient_list, encoded_list):
-        print(f"Ingrediente originale: {ingredient} | Numero assegnato: {number}")
+        print(f"Ingrediente originale: {ingredient} | Id encod: {number}")
 
     # dtype indica che ogni elemento dell'array è un numero intero
     poke_dataset_encoded = np.empty(
@@ -59,7 +56,7 @@ def codificaDataset():
     #print (poke_dataset_encoded)
 
     #disegna il grafico degli ingredienti
-    #trainplot.scatter_ingredients(poke_dataset)
+    trainplot.scatter_ingredients(poke_dataset)
 
 
     return poke_dataset_encoded
