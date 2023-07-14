@@ -59,7 +59,7 @@ def codificaDataset():
     #print (poke_dataset_encoded)
 
     #disegna il grafico degli ingredienti
-    trainplot.scatter_ingredients(poke_dataset)
+    #trainplot.scatter_ingredients(poke_dataset)
 
 
     return poke_dataset_encoded
@@ -105,10 +105,16 @@ def trainTest():
     predictions = multi_target_forest.predict(X_test)
     #print ('predictions:')
     #print (predictions)
-    # produciamo il report di classificazione
-    #report = classification_report(y_test, predictions, zero_division=1)
+    
+    # Produci il report di classificazione per la prima etichetta
+    report_label1 = classification_report(y_test[:, 0], predictions[:, 0], zero_division=1)
+    print("Report per la prima etichetta:\n", report_label1)
 
-    # stampiamo il report
+    # Produci il report di classificazione per la seconda etichetta
+    report_label2 = classification_report(y_test[:, 1], predictions[:, 1], zero_division=1)
+    print("Report per la seconda etichetta:\n", report_label2)
+
+    # stampiamo il report (funziona solo quando c'è una label da fittare)
     #print('report: ')
     #print(report)
 
