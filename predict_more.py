@@ -19,8 +19,8 @@ def predictIngredient(myArray):
 
     multi_target_forest = loadModel()
     poke_incomplete_encoded = multi_target_forest.estimators_[0].classes_  #Riprende le classi così come codificate nel modello
-    num_inc = len(poke_incomplete) #legge la lunghezza dell'array
-    poke_incomplete_encoded = le.transform(poke_incomplete[:num_inc]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
+    num_inc = len(myArray) #legge la lunghezza dell'array
+    poke_incomplete_encoded = le.transform(myArray[:num_inc]).reshape(1, -1) #reshape(1, -1) resituisce un array con una singola riga, con il numero di colonne determinato dal transform()
     predicted_missing_ingredients_encoded = multi_target_forest.predict(poke_incomplete_encoded) #dopo il fit, immancabile il predict per fare la predizione
     print (predicted_missing_ingredients_encoded)
     for ingredient_encoded in predicted_missing_ingredients_encoded:
@@ -46,9 +46,9 @@ def predictIngredient(myArray):
 
 
 
-    poke_incomplete.extend(predicted_ingredient)
-    print(poke_incomplete)
+    myArray.extend(predicted_ingredient)
+    print(myArray)
     
-    return(poke_incomplete)
+    return(myArray)
  
 predictIngredient(poke_incomplete) 
