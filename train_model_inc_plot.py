@@ -7,7 +7,7 @@ from constants import *
 import numpy as np
 
 def create_matrix_for_plot(poke_dataset):
-    print('create_matrix_for_plot')
+    print('Create a Matrix for the scatter Diagram')
     # Inizializza una matrice di zeri con una riga per ogni ingrediente
     matrix = np.zeros((len(ingredient_list), len(ingredient_list)))
 
@@ -50,7 +50,7 @@ def scatter_ingredienti_old(ingredient_matrix):
 '''
 
 def scatter_ingredients(poke_dataset):
-    print('Scatter ingredienti')
+    print('Plot Scatter Diagram for Ingredients')
 
     ingredients_matrix = create_matrix_for_plot(poke_dataset)
     # Riduci a 2 dimensioni con PCA.
@@ -93,9 +93,9 @@ def plotFeatures(multi_target_forest, X_train, y_train):
         indices = np.argsort(importances)
 
         plt.figure(i)
-        plt.title('Importanze delle caratteristiche per l\'output {}'.format(i))
+        plt.title('Importance of features for output {}'.format(i))
         plt.barh(range(X_train.shape[1]), importances[indices], color='b', align='center')
         plt.yticks(range(X_train.shape[1]), [ingredient_list[i] for i in indices])
-        plt.xlabel('Importanza relativa')
+        plt.xlabel('Relative Importance')
         plt.show()
 
