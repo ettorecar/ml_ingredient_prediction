@@ -8,44 +8,44 @@
 </head>
 
 <body>
-    <h1>Inserisci i tuoi ingredienti</h1>
-    <p id="paragrafo"></p>
-    <!-- <textarea name="ingredienti" id="ingredienti"></textarea> -->
-    <button onclick="recuperaArray()">Invia</button>
+    <!-- <form method="POST" action="/my_endpoint">
+        <label for="my_field">My Field:</label>
+        <input type="text" id="my_field" name="password">
+    </form> -->
 
-    <p id="risultato"></p>
+    <h1>Your ingredients</h1>
+    <p id="paragraph"></p>
+    <button onclick="retrieveArray()">Submit</button>
+
+    <p id="result"></p>
 </body>
 
 <script>
 
     const myArray = ["riso bianco", "salmone crudo", "tonno crudo", "daikon", "zenzero marinato", "uovo marinato", "edamame", "semi di lino"];
-    document.getElementById("paragrafo").innerHTML = myArray;
-    function recuperaArray() {
-        console.log("recuperaArray");
+    document.getElementById("paragraph").innerHTML = myArray;
+    function retrieveArray() {
+        console.log("retrieveArray");
         // const myArray = document.getElementById("ingredienti").value;
 
 
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ poke_incomplete: myArray })
+            body: JSON.stringify({ password: 'Phaser2023', recipe_incomplete: myArray})
+            // body: JSON.stringify({ recipe_incomplete: myArray })
         };
 
-        // if (myArray != "") {
-        //     console.log("siamo nell'if");
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const poke_incomplete = urlParams.get('myArray');
-        //     console.log("dopo if");
-        fetch('http://127.0.0.1:8080/api/v.1.0/backend_poke_predict', requestOptions)
+        const recipe_incomplete = urlParams.get('myArray');
+        fetch('http://127.0.0.1:8080/api/v.1.0/backend_recipe_predict', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                document.getElementById('risultato').innerHTML += data[8];
-                document.getElementById('risultato').innerHTML += ", " + data[9];
+                document.getElementById('result').innerHTML += data[8];
+                document.getElementById('result').innerHTML += ", " + data[9];
             })
-
-        // }
     }
 
 </script>

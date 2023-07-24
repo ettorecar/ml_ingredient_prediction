@@ -1,11 +1,15 @@
-Flask==2.1.0
-Flask-Cors==3.1.11
-numpy==1.19.2
-scikit_learn==1.1.3
+Flask==2.2.3
+Flask-Cors==3.0.10
+numpy==1.25.0
+scikit-learn==1.3.0
 matplotlib==3.7.2
+beautifulsoup4==4.12.2
+bs4==0.0.1
 
 
-# questo file che si limitata ad inserire solo le librerie strettamente necessarie al progetto
-# è stato generato con i seguenti comandi
+# this file inserts only libraries strictly necessary for the project
+# generated with the following commands
 # 1) pip install pipreqs
 # 2) python3 -m  pipreqs.pipreq
+# alternative method to generate requirements in txt 
+# pip freeze > rquirements_orig.txt (strictly necessary libraries are shifted in this file)

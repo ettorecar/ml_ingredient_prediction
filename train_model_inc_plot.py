@@ -6,33 +6,33 @@ from sklearn.decomposition import PCA
 from constants import *
 import numpy as np
 
-def create_matrix_for_plot(poke_dataset):
+def create_matrix_for_plot(recipe_dataset):
     print('Create a Matrix for the scatter Diagram')
-    # Inizializza una matrice di zeri con una riga per ogni ingrediente
+    # initializes a zeros matrix with a row for each ingredients
     matrix = np.zeros((len(ingredient_list), len(ingredient_list)))
 
-    # Per ogni piatto, aumenta di 1 il conteggio per ogni coppia di ingredienti nel piatto
-    for poke in poke_dataset:
+    # for each recipe, increase by 1 the count for each couple of ingredients
+    for recipe in recipe_dataset:
         for i in range(num_com):
             for j in range(i + 1, num_com):
-                # Trova gli indici di questi ingredienti nella ingredient_list
-                i_index = ingredient_list.index(poke[i])
-                j_index = ingredient_list.index(poke[j])
+                # finds indexes of these ingredients in ingredient_list
+                i_index = ingredient_list.index(recipe[i])
+                j_index = ingredient_list.index(recipe[j])
 
-                # Aumenta di 1 il conteggio per questa coppia di ingredienti
+                # increase by 1 the count for this couple of ingredients
                 matrix[i_index, j_index] += 1
                 matrix[j_index, i_index] += 1
 
     return matrix
 
 '''
-def scatter_ingredienti_old(ingredient_matrix):
-    print('Scatter ingredienti')
-    # Riduci a 2 dimensioni con PCA.
+def scatter_ingredients_old(ingredient_matrix):
+    print('Scatter ingredients')
+    #  reduces to 2 sizes with PCA.
     pca = PCA(n_components=2)
     points = pca.fit_transform(ingredient_matrix)
 
-    # Disegna i punti.
+    # draws the points.
     cmap = plt.get_cmap('rainbow')
 
     for i, ingredient in enumerate(ingredient_list):
@@ -49,35 +49,35 @@ def scatter_ingredienti_old(ingredient_matrix):
     plt.show()
 '''
 
-def scatter_ingredients(poke_dataset):
+def scatter_ingredients(recipe_dataset):
     print('Plot Scatter Diagram for Ingredients')
 
-    ingredients_matrix = create_matrix_for_plot(poke_dataset)
-    # Riduci a 2 dimensioni con PCA.
+    ingredients_matrix = create_matrix_for_plot(recipe_dataset)
+    # reduces to 2 sizes with PCA.
     pca = PCA(n_components=2)
     points = pca.fit_transform(ingredients_matrix)
 
-    # Crea un istogramma 2D dei punti
-    bins = 50  # Numero di bin
+    # creates 2D histogram of points
+    bins = 50  # Num of bin
     H, xedges, yedges = np.histogram2d(points[:, 0], points[:, 1], bins=bins)
 
-    # Creazione di una colormap personalizzata con bianco per densità 0
+    # creates a customized colormap with white for 0 density 
     cmap_colors = [(1.0, 1.0, 1.0)] + plt.cm.rainbow(np.linspace(0, 1, 255)).tolist()
     cmap = LinearSegmentedColormap.from_list('CustomCmap', cmap_colors, len(cmap_colors))
 
-    # Disegna il grafico dell'istogramma con colormap personalizzata
+    # draws histogram graphic with customized colormap
     plt.imshow(H.T, origin='lower', extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], cmap=cmap, aspect='auto')
 
-    # Aggiungi colorbar
+    # adds colorbar
     cbar = plt.colorbar()
     cbar.set_label('Density')
 
-    # Etichetta gli ingredienti
+    # labels ingredients
     texts = []
     for i, ingredient in enumerate(ingredient_list):
         texts.append(plt.text(points[i, 0], points[i, 1], ingredient, fontsize='xx-small', ha='center', va='center'))
 
-    # Posiziona le etichette dei testi in modo non sovrapposto
+    # places text labels in a non-overlapping way
     adjust_text(texts, arrowprops=dict(arrowstyle='->', color='black'))
 
     plt.xlabel('Dimension 1')

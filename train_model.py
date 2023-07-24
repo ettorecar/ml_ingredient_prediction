@@ -14,48 +14,48 @@ import train_model_inc_plot as trainplot
 
 def createDataset():
     print('Create Dataset')
-    # dtype indica che ogni elemento dell'array è una stringa con lunghezza massima di 25 caratteri
-    poke_dataset = np.empty((num_row, num_com), dtype='<U25')
+    # dtype means that each array's element is a string with max lenght of 25 characters 
+    recipe_dataset = np.empty((num_row, num_com), dtype='<U25')
     for i in range(num_row):
-        poke_dataset[i] = random.sample(ing_basi, 1) +  random.sample(ing_princ, 2) + random.sample(ing_altri, 4) + random.sample(ing_semi, 1) + random.sample(ing_salsa, 1) + random.sample(ing_topping, 1) 
+        recipe_dataset[i] = random.sample(ing_bases, 1) +  random.sample(ing_princ, 2) + random.sample(ing_others, 4) + random.sample(ing_seeds, 1) + random.sample(ing_sauce, 1) + random.sample(ing_topping, 1) 
   
-    #print (poke_dataset)
-    return poke_dataset
+    #print (recipe_dataset)
+    return recipe_dataset
 
 
 def encodeDataset():
     print('Encode Dataset')
-    poke_dataset = createDataset()
+    recipe_dataset = createDataset()
     le = LabelEncoder()
-    le.fit(ingredient_list)  # trasforma gli elementi da testo a numero
+    le.fit(ingredient_list)  # transforms elements from text to num
     encoded_list = le.transform(ingredient_list)
 
-    # stampa ingrediente e id numerico assegnato 
+    # prints ingredient and numeric id assigned 
     for ingredient, number in zip(ingredient_list, encoded_list):
-        print(f"Inggredient: {ingredient} | Id encod: {number}")
+        print(f"Ingredient: {ingredient} | Id encod: {number}")
 
-    poke_dataset_encoded = np.empty( (num_row, num_com), dtype=int)
+    recipe_dataset_encoded = np.empty( (num_row, num_com), dtype=int)
     for i in range(num_row):
-        # converte ogni singolo elemento in un numero, come previsto dal .fit precedente
-        poke_dataset_encoded[i] = le.transform(poke_dataset[i])
+        # transforms each element to a num, as predicted in .fit
+        recipe_dataset_encoded[i] = le.transform(recipe_dataset[i])
 
 
-    #conteggia quante volte appaiono gli ingredienti nel dataset in totale per ingrediente
-    #unique_numbers, counts = np.unique(poke_dataset, return_counts=True)
+    #counts the total times ingredients appear in dataset, for each ingredient
+    #unique_numbers, counts = np.unique(recipe_dataset, return_counts=True)
     #for number, count in zip(unique_numbers, counts):
     #    print(f"{number}: {count}")
-    #print (poke_dataset_encoded)
+    #print (recipe_dataset_encoded)
 
-    #disegna il grafico a dispersione degli ingredienti
-    trainplot.scatter_ingredients(poke_dataset)
+    #draws the ingredients' scatter plot disegna 
+    trainplot.scatter_ingredients(recipe_dataset)
 
-    return poke_dataset_encoded
+    return recipe_dataset_encoded
 
 
 def calculateAccuracy(multi_target_forest, X_test, y_test):
     le = LabelEncoder()
     le.fit(ingredient_list)
-    # calcolo accuratezza media del modello
+    # calculate accuracy score of the model
     y_pred = multi_target_forest.predict(X_test)
     accuracies = []
     for i in range(y_test.shape[1]):
@@ -68,54 +68,54 @@ def calculateAccuracy(multi_target_forest, X_test, y_test):
 
 def trainTest():
 
-    poke_dataset_encoded = encodeDataset()
+    recipe_dataset_encoded = encodeDataset()
 
-    # X è l'input, quindi la matrice delle feature
-    X = poke_dataset_encoded[:, :num_inc]
-    # y è l'output, comprende le colonne mancanti, cioè le label
-    y = poke_dataset_encoded[:, num_inc:]
+    # X is the input (feature matrix)
+    X = recipe_dataset_encoded[:, :num_inc]
+    # y is the output (missing colums = label)
+    y = recipe_dataset_encoded[:, num_inc:]
 
     print('*** Start Training Model... ... ***')
     X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=1)
 
-    # 1: se il dataset di partenza è lo stesso genera sempre gli stessi risultati
+    # 1: if the starting dataset is the same, it generates always same results
     forest = RandomForestClassifier(random_state=1)
-    multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: utilizza tutti i processori
-    multi_target_forest.fit(X_train, y_train)  # addestriamo il modello
+    multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: uses all precessors
+    multi_target_forest.fit(X_train, y_train)  # train the model
 
-    #grafico dell'importanza delle feature, sembra funzionare a caso
+    # features importance's plot, seems like it works randomly
     #trainplot.plotFeatures(multi_target_forest, X_train, y_train)
 
-    # facciamo delle predizioni sul test set
+    # predictions on test set
     predictions = multi_target_forest.predict(X_test)
     #print ('predictions:')
     #print (predictions)
     
-    # Produci il report di classificazione per la prima etichetta
+    # princes the classification report for the first label 
     report_label1 = classification_report(y_test[:, 0], predictions[:, 0], zero_division=1)
     print("Report first label:\n", report_label1)
 
-    # Produci il report di classificazione per la seconda etichetta
+    # princes the classification report for the second label 
     report_label2 = classification_report(y_test[:, 1], predictions[:, 1], zero_division=1)
     print("Report second label:\n", report_label2)
 
-    # Calcola la matrice di correlazione
+    # calculate the correlation matrix
     correlation_matrix = np.corrcoef(predictions, rowvar=False)
 
-    # Stampa la matrice di correlazione
+    # prints the correlation matrix
     print("Correlation Matrix:\n", correlation_matrix)
 
 
-    # stampiamo il report (funziona solo quando c'è una label da fittare, siamo passati a 2 ora)
+    # prints the report (it works only with a single label, now we have 2)
     #print('report: ')
     #print(report)
 
-    # altro metodo per calcolare accuracy
+    # alternative method to calculate accuracy
     calculateAccuracy(multi_target_forest, X_test, y_test)
 
-    # salva il modello addestrato
-    dump(multi_target_forest, 'py_cache/poke_model.joblib')
-    print("model saved: py_cache/poke_model.joblib")
+    # saves trained model
+    dump(multi_target_forest, 'py_cache/recipe_model.joblib')
+    print("model saved: py_cache/recipe_model.joblib")
     return multi_target_forest
 
 trainTest()
