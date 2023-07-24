@@ -13,21 +13,26 @@ import train_model_inc_plot as trainplot
 
 
 def createDataset():
+    '''
+    since we do not have a real dataset, for testing purposes we build a list of recipes with random ingredients, 
+    taking pokes as a reference, we create bowls with the correct number of ingredients by type
+    ''' 
     print('Create Dataset')
     # dtype means that each array's element is a string with max lenght of 25 characters 
     recipe_dataset = np.empty((num_row, num_com), dtype='<U25')
     for i in range(num_row):
         recipe_dataset[i] = random.sample(ing_bases, 1) +  random.sample(ing_princ, 2) + random.sample(ing_others, 4) + random.sample(ing_seeds, 1) + random.sample(ing_sauce, 1) + random.sample(ing_topping, 1) 
-  
-    #print (recipe_dataset)
+    
     return recipe_dataset
 
 
 def encodeDataset():
-    print('Encode Dataset')
+    '''
+    the dataset is converted from string to number in order to facilitate the ML operations
+    '''
     recipe_dataset = createDataset()
     le = LabelEncoder()
-    le.fit(ingredient_list)  # transforms elements from text to num
+    le.fit(ingredient_list) 
     encoded_list = le.transform(ingredient_list)
 
     # prints ingredient and numeric id assigned 
@@ -36,7 +41,7 @@ def encodeDataset():
 
     recipe_dataset_encoded = np.empty( (num_row, num_com), dtype=int)
     for i in range(num_row):
-        # transforms each element to a num, as predicted in .fit
+
         recipe_dataset_encoded[i] = le.transform(recipe_dataset[i])
 
 
@@ -46,16 +51,18 @@ def encodeDataset():
     #    print(f"{number}: {count}")
     #print (recipe_dataset_encoded)
 
-    #draws the ingredients' scatter plot disegna 
+    #draws the ingredients' scatter plot 
     trainplot.scatter_ingredients(recipe_dataset)
 
     return recipe_dataset_encoded
 
 
 def calculateAccuracy(multi_target_forest, X_test, y_test):
+    '''
+    It calculates the average accuracy of the model
+    '''
     le = LabelEncoder()
     le.fit(ingredient_list)
-    # calculate accuracy score of the model
     y_pred = multi_target_forest.predict(X_test)
     accuracies = []
     for i in range(y_test.shape[1]):
@@ -67,6 +74,12 @@ def calculateAccuracy(multi_target_forest, X_test, y_test):
 
 
 def trainTest():
+    '''
+    main method of training step.
+    It use the Random Forest Classifier as model.
+    Also in this method we print reports and other useful data for debug and also to validate the model
+
+    '''
 
     recipe_dataset_encoded = encodeDataset()
 
@@ -78,7 +91,7 @@ def trainTest():
     print('*** Start Training Model... ... ***')
     X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=1)
 
-    # 1: if the starting dataset is the same, it generates always same results
+    # random_state= 1: if the starting dataset is the same, it generates always same results
     forest = RandomForestClassifier(random_state=1)
     multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: uses all precessors
     multi_target_forest.fit(X_train, y_train)  # train the model
@@ -86,7 +99,7 @@ def trainTest():
     # features importance's plot, seems like it works randomly
     #trainplot.plotFeatures(multi_target_forest, X_train, y_train)
 
-    # predictions on test set
+    # predictions based on test set
     predictions = multi_target_forest.predict(X_test)
     #print ('predictions:')
     #print (predictions)

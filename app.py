@@ -24,7 +24,10 @@ CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://localh
 
 @app.route("/api/v.1.0/backend_recipe_predict", methods=["POST"])
 def request_post():
-     
+    '''
+    this is the entry point for web application that calls this post method in order to obtain predictions of ingredients.
+    It takes in input the recipe incomplete, for example with 8 ingredients, and it returns 10 ingredients.
+    ''' 
     request_data = request.get_json()
     apiPassword = request_data.get("password")
     recipe_incomplete = request_data.get("recipe_incomplete")
@@ -49,7 +52,7 @@ def request_post():
         print(myResult)
         return(myResult)
     else: 
-        print("sono nell'else")
+        print("debug: else function")
         print(apiPassword)
         data = [
             'riso bianco', 'salmone crudo', 'tonno crudo', 'daikon', 'zenzero marinato',

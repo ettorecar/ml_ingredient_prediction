@@ -50,6 +50,10 @@ def scatter_ingredients_old(ingredient_matrix):
 '''
 
 def scatter_ingredients(recipe_dataset):
+    '''
+    this method draws a scatterplot of the ingredients, starting from the dataset.
+    It is not correlated to the model, since it is a preliminar analysis, based only on input data.
+    '''
     print('Plot Scatter Diagram for Ingredients')
 
     ingredients_matrix = create_matrix_for_plot(recipe_dataset)
@@ -87,6 +91,10 @@ def scatter_ingredients(recipe_dataset):
     plt.show()
 
 def plotFeatures(multi_target_forest, X_train, y_train):
+    '''
+    this method plot a diagram that shows the importance of the features
+    currently it seems not accurate, we have to review the code.
+    '''
     for i in range(y_train.shape[1]):
         RF_model = multi_target_forest.estimators_[i]
         importances = RF_model.feature_importances_
@@ -98,4 +106,3 @@ def plotFeatures(multi_target_forest, X_train, y_train):
         plt.yticks(range(X_train.shape[1]), [ingredient_list[i] for i in indices])
         plt.xlabel('Relative Importance')
         plt.show()
-

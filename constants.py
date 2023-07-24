@@ -12,8 +12,6 @@ ing_sauce = ['soia classica', 'teriyaki','salsa ponzu', 'salsa agrodolce','salsa
 ing_topping = ['furikake', 'wasabipeas', 'mais tostato', 'cipolla crispy', 'alghe nori', 'cocco chips', 'melograno', 'bacche di goji', 'mandorle']
 
 #composition. 1 base, 2 principals, 4 others, 1 seeds, 1 sauce, 1 topping. Label: sauce and topping.
-
-
 ingredient_list = ing_bases + ing_princ + ing_others + ing_seeds + ing_sauce + ing_topping
 
 #recipe_incomplete = ['insalata', 'gamberi', 'tofu', 'avocado', 'cetriolo', 'cipollotto', 'pomodorini', 'sesamo bianco']
