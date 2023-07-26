@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from joblib import load
 from constants import *
@@ -14,16 +14,9 @@ def loadModel():
     multi_target_forest = load('py_cache/recipe_model.joblib') 
     return multi_target_forest
 
-def test_1():
-    '''
-    loading of the model from disk /joblib format.
-    the model has been saved by train_model.py, so predict.py must be executed after train_model.py
-    '''
-    print('test 1')
-    return ('1')
 
 def predictIngredient(myArray):
-    print(recipe_incomplete)
+    print('recipe_incomplete in predict.py: ', recipe_incomplete)
     print('predict ingredients')
 
     le = LabelEncoder()
@@ -35,10 +28,10 @@ def predictIngredient(myArray):
     num_inc = len(myArray)
     recipe_incomplete_incomplete_encoded = le.transform(myArray[:num_inc]).reshape(1, -1) #reshape(1, -1) returns an array with a single row, with num of columns determined in transform() 
     predicted_missing_ingredients_encoded = multi_target_forest.predict(recipe_incomplete_incomplete_encoded) #after fit, follow the predict instruction for the prediction
-    print (predicted_missing_ingredients_encoded)
+    print ('predicted_missing_ingredients_encoded:', predicted_missing_ingredients_encoded)
     for ingredient_encoded in predicted_missing_ingredients_encoded:
         predicted_ingredient = le.inverse_transform(ingredient_encoded)
-        print(predicted_ingredient)
+        print('predicted_ingredient:', predicted_ingredient)
     
     predicted_probabilities = multi_target_forest.predict_proba(recipe_incomplete_incomplete_encoded) #indicates prediction's probability 
         #print (predicted_probabilities)
@@ -57,10 +50,9 @@ def predictIngredient(myArray):
 
     #it adds the predicted ingredients at the end of the original array 
     myArray.extend(predicted_ingredient)
-    print(myArray)
+    print('myArray in predict.py:', myArray)
     
     return(myArray)
  
-#predictIngredient(recipe_incomplete) #we use it for local execution of the file, in alternative to flask services in app.py
-test_1()
+predictIngredient(recipe_incomplete) #we use it for local execution of the file, in alternative to flask services in app.py
 

@@ -42,9 +42,9 @@ def request_post():
         request_data = request.get_json()
         myArray = request_data['recipe_incomplete']
 
-        print(myArray)
+        print('myArray in app.py:', myArray)
         myResult = predictIngredient(recipe_incomplete)
-        print(myResult)
+        print('myResult in app.py:', myResult)
         return(myResult)
     else: 
         print("debug: else function")
