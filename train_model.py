@@ -93,7 +93,7 @@ def trainTest():
 
     # random_state= 1: if the starting dataset is the same, it generates always same results
     forest = RandomForestClassifier(random_state=1)
-    multi_target_forest = MultiOutputClassifier(forest, n_jobs=-1)  # -1: uses all precessors
+    multi_target_forest = MultiOutputClassifier(forest, n_jobs=4)  # -1: uses all precessors but it doesn't work on pythonanywhere
     multi_target_forest.fit(X_train, y_train)  # train the model
 
     # features importance's plot, seems like it works randomly

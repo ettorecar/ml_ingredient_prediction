@@ -14,6 +14,14 @@ def loadModel():
     multi_target_forest = load('py_cache/recipe_model.joblib') 
     return multi_target_forest
 
+def test_1():
+    '''
+    loading of the model from disk /joblib format.
+    the model has been saved by train_model.py, so predict.py must be executed after train_model.py
+    '''
+    print('test 1')
+    return ('1')
+
 def predictIngredient(myArray):
     print(recipe_incomplete)
     print('predict ingredients')
@@ -53,4 +61,6 @@ def predictIngredient(myArray):
     
     return(myArray)
  
-predictIngredient(recipe_incomplete) #we use it for local execution of the file, in alternative to flask services in app.py
+#predictIngredient(recipe_incomplete) #we use it for local execution of the file, in alternative to flask services in app.py
+test_1()
+
