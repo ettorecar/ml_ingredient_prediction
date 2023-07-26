@@ -3,15 +3,6 @@ This project allows the use of machine learning to predict the ingredients of a 
 The model used is the Multi Target Forest and the Scikit Learn library.
 The project can also be executed via flask POST api, for example from a remote frontend, or by launching the Train and Predict files in sequence locally or on a cloud server.
 
-## Contenuto
-
-Il file README dovrebbe contenere le seguenti informazioni:
-
-* Una descrizione del progetto
-* I comandi per installare e eseguire il progetto
-* I link a risorse esterne utili per il progetto
-
-
 ## Commands
 
 To install project launch the following instructions:
