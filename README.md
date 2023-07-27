@@ -50,7 +50,7 @@ Here are some links to useful resources for the project:
 * [Github wiki](https://github.com/ettorecar/ml_ingredient_prediction/wiki)
 
 ## License
-This project is licensed under the MIT license.
+This project is licensed under the MIT license (LICENSE.md).
 
 
 ## Authors
