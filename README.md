@@ -47,6 +47,10 @@ Here are some links to useful resources for the project:
 * [GitHub guide](https://guides.github.com/)
 * [Python documentation](https://docs.python.org/3/)
 * [Github link](https://github.com/ettorecar/ml_ingredient_prediction)
+* [Github wiki](https://github.com/ettorecar/ml_ingredient_prediction/wiki)
+
+## License
+This project is licensed under the MIT license.
 
 
 ## Authors
