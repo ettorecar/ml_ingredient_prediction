@@ -52,6 +52,17 @@ Here are some links to useful resources for the project:
 ## License
 This project is licensed under the [MIT license](LICENSE.md).
 
+## Deployment
+The project is successfully deployed on Python Anywhere Platform. Contact Authors for further info.
+It runs correctly on Python 3.8, 3.9, 3.10 (previous versions not verified)
+
+## Technical Details
+This project is implemented in Python, a general-purpose programming language that is popular for machine learning. The project uses a random forest classifier to predict the two missing ingredients in a recipe. The random forest classifier is a type of machine learning algorithm that is known for its accuracy and robustness. It works by creating several decision trees, and then combining the predictions of the decision trees to make a final prediction.
+The project is still under development, but it has already shown to be able to predict the two missing ingredients in a recipe with high accuracy. The project has the potential to revolutionize the way people order food and could be used by restaurants, online stores, and others.
+The project code is hosted on GitHub and is available for anyone to use or modify under MIT License. The code is well-documented and easy to understand and use.
+See project WIKI  section for additional information.
+## Mission
+This project is a proof-of-concept that shows how machine learning can be used to predict missing ingredients in recipes. The project has the potential to revolutionize the way that people order food. The project is open source, and it is available for anyone to use or modify.
 
 ## Authors
 
