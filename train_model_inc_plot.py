@@ -1,5 +1,5 @@
 from matplotlib.colors import LinearSegmentedColormap
-from adjustText import adjust_text #not available on pythonanywhere
+
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
@@ -82,6 +82,7 @@ def scatter_ingredients(recipe_dataset):
         texts.append(plt.text(points[i, 0], points[i, 1], ingredient, fontsize='xx-small', ha='center', va='center'))
 
     # places text labels in a non-overlapping way
+    from adjustText import adjust_text #not available on pythonanywhere
     adjust_text(texts, arrowprops=dict(arrowstyle='->', color='black')) #comment on pythonanywhere
 
     plt.xlabel('Dimension 1')
