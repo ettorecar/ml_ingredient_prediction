@@ -8,7 +8,7 @@ The project can also be executed via flask POST api, for example from a remote f
 To install project launch the following instructions:
 
 ```
-git clone https://github.com/[username]/[project-name].git
+git clone https://github.com/ettorecar/ml_ingredient_prediction.git
 ```
 
 
