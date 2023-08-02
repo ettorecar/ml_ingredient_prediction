@@ -51,6 +51,11 @@ def encodeDataset():
     #    print(f"{number}: {count}")
     #print (recipe_dataset_encoded)
 
+    # print dataset shape
+    print("Dataset shape:")
+    print(recipe_dataset.shape)
+    
+
     #draws the ingredients' scatter plot 
     trainplot.scatter_ingredients(recipe_dataset)
 
