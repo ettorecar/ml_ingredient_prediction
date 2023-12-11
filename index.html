@@ -41,8 +41,8 @@
         const recipe_incomplete = urlParams.get('myArray');
         
         
-        //fetch('http://raffaella94.pythonanywhere.com/api/v.1.0/backend_recipe_predict', requestOptions) 
-        fetch('http://127.0.0.1:8080/api/v.1.0/backend_recipe_predict', requestOptions)
+        fetch('http://raffaella94.pythonanywhere.com/api/v.1.0/backend_recipe_predict', requestOptions) 
+        //fetch('http://127.0.0.1:8080/api/v.1.0/backend_recipe_predict', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
